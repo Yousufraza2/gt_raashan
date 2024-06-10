@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+GT Raashan Info - Login
+{% endblock %}
+
+{% block header_extras %}
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+<link rel="stylesheet" href="{% static 'custom/css/social-buttons.css' %}" >
+{% endblock %}
+
+{% block body_start %}
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v6.0&appId=599955617271566&autoLogAppEvents=1"></script>
+<!-- <meta name="google-signin-client_id" content=""> -->
+{% endblock %}
+
+{% block back_button %}
+{% endblock %}
+
+{% block content %}
+    <div class="form-signin">
+        <form id="login-form" method="post" class="needs-validation {% if form.errors %} was-validated {% endif %}">
+            {% csrf_token %}
+            <div class="h3 mb-3 font-weight-normal">Please sign in</div>
+            <a href="{% url 'social:begin' 'facebook' %}" class="btn btn-block btn-social btn-facebook">
+                <i class="fab fa-facebook-f"></i> 
+                Sign in with Facebook
+            </a>
+            <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-block btn-social btn-google">
+                <i class="fab fa-google"></i> 
+                Sign in with Google
+            </a>
+            <br>
+            <div class="strike">
+                <span>OR</span>
+            </div>
+            <br>
+            <div class="form-group row">
+                <div class="col">
+                    <label for="id_username" class="sr-only">Username</label>
+                    <input id="id_username" name="username" type="text" class="form-control" placeholder="Username" required autofocus>
+                    <label for="id_password" class="sr-only">Password</label>
+                    <input id="id_password" name="password" type="password" class="form-control" placeholder="Password" required>
+                    {% if form.errors %}
+                        <div class="invalid-feedback">
+                            Your username and password didn't match. 
+                            Please try again.
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <input type="submit" value="Login" class="btn btn-primary btn-block" />
+                    <input type="hidden" name="next" value="{{ next }}" />
+                </div>
+            </div>
+            <br>
+            <hr>
+            <br>
+            <div class="row">
+                <div class="col">
+                    <div class="h5 mb-3 font-weight-normal">Don't have an account? Sign up!</div>
+                    <a href="/signup" class="btn btn-primary btn-block">
+                        Sign Up
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}
